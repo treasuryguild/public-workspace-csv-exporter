@@ -1,13 +1,13 @@
 // ..app/githubexports/page.tsx
 'use client';
 import React from 'react';
-import ExampleComponent from '@/components/ExampleComponent';
+import GetProjectBoards from '@/components/GetProjectBoards';
 
 export default function GitHubExports() {
     return ( 
         <div>
           GitHub
-            <ExampleComponent />
+            <GetProjectBoards />
         </div>
     );
 }
