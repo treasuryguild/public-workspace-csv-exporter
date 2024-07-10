@@ -1,0 +1,8 @@
+.greenRow {
+    background-color: rgb(13, 51, 26);
+  }
+  
+  .loadingBarFill {
+    background-color: #3b82f6;
+    transition: width 0.3s ease-in-out;
+  }

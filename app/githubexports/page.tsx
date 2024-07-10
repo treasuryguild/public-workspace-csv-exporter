@@ -6,7 +6,7 @@ import GetProjectBoards from '@/components/GetProjectBoards';
 export default function GitHubExports() {
     return ( 
         <div>
-          GitHub
+          <h1>GitHub Exports</h1>
             <GetProjectBoards />
         </div>
     );

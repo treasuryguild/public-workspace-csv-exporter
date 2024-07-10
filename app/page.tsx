@@ -1,6 +1,6 @@
 // ../app/page.tsx
 'use client';
-import styles from "./page.module.css";
+import styles from "../styles/page.module.css";
 import Nav from "../components/Nav";
 
 export default function Home() {
@@ -10,7 +10,7 @@ export default function Home() {
         <Nav />
       </div>  
       <div>
-        Test
+        Ola
       </div>
     </main>
   );
