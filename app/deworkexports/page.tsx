@@ -36,13 +36,13 @@ function LoadingBar({ current, total }: { current: number; total: number }) {
   const percentage = total > 0 ? (current / total) * 100 : 0;
   return (
     <div>
-      <div className="w-full bg-gray-200 h-4 mb-4 rounded-full overflow-hidden">
+      <div className={styles.loadingBarContainer}>
         <div 
           className={styles.loadingBarFill}
-          style={{ width: `${percentage}%`, height: '100%' }}
+          style={{ width: `${percentage}%` }}
         ></div>
       </div>
-      <div className="text-center mt-2">
+      <div className={styles.loadingText}>
         Loading workspaces: {current} / {total}
       </div>
     </div>
@@ -284,12 +284,12 @@ export default function DeworkExports() {
     }
 
     return ( 
-      <div className="p-4">
-          <h1 className="text-2xl font-bold mb-4">Dework Exports</h1>
+      <div className={styles.container}>
+          <h1 className={styles.title}>Dework Exports</h1>
           <select
               value={selectedOrg}
               onChange={(e) => setSelectedOrg(e.target.value)}
-              className="mb-4 p-2 border rounded"
+              className={styles.select}
           >
               <option value={orgSNET}>SNET</option>
               <option value={orgSwarm}>Swarm</option>
@@ -298,18 +298,18 @@ export default function DeworkExports() {
           {isLoading ? (
               <div>
                   <LoadingBar current={loadedWorkspaces} total={totalWorkspaces} />
-                  <div className="text-center">Loading Dework workspaces...</div>
+                  <div className={styles.loadingText}>Loading Dework workspaces...</div>
               </div>
           ) : (
-              <table className="w-full border-collapse">
+              <table className={styles.table}>
                   <thead>
                       <tr>
-                          <th className="border p-2">Workspace</th>
-                          <th className="border p-2">Fund Request</th>
-                          <th className="border p-2">Not Fund Request</th>
-                          <th className="border p-2">Status</th>
-                          <th className="border p-2">Link</th>
-                          <th className="border p-2">Export</th>
+                          <th className={styles.tableHeader}>Workspace</th>
+                          <th className={styles.tableHeader}>Fund Request</th>
+                          <th className={styles.tableHeader}>Not Fund Request</th>
+                          <th className={styles.tableHeader}>Status</th>
+                          <th className={styles.tableHeader}>Link</th>
+                          <th className={styles.tableHeader}>Export</th>
                       </tr>
                   </thead>
                   <tbody>
@@ -319,19 +319,19 @@ export default function DeworkExports() {
                           
                           return (
                               <tr key={key} className={rowClass}>
-                                  <td className="border p-2">{workspace.name}</td>
-                                  <td className="border p-2 text-center">{fundRequestCount}</td>
-                                  <td className="border p-2 text-center">{countNonAuditedTasks(workspace.tasks)}</td>
-                                  <td className={`border p-2 ${countNonAuditedTasks(workspace.tasks) > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                                  <td className={styles.tableCell}>{workspace.name}</td>
+                                  <td className={`${styles.tableCell} ${styles.textCenter}`}>{fundRequestCount}</td>
+                                  <td className={`${styles.tableCell} ${styles.textCenter}`}>{countNonAuditedTasks(workspace.tasks)}</td>
+                                  <td className={`${styles.tableCell} ${countNonAuditedTasks(workspace.tasks) > 0 ? styles.textRed : styles.textGreen}`}>
                                       {countNonAuditedTasks(workspace.tasks) > 0 ? 'Not Audited' : 'All Audited'}
                                   </td>
-                                  <td className="border p-2">
-                                      <button onClick={() => openLink(workspace.slug)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                                  <td className={styles.tableCell}>
+                                      <button onClick={() => openLink(workspace.slug)} className={`${styles.button} ${styles.buttonBlue}`}>
                                           Open Board
                                       </button>
                                   </td>
-                                  <td className="border p-2">
-                                      <button onClick={() => exportData(workspace)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                                  <td className={styles.tableCell}>
+                                      <button onClick={() => exportData(workspace)} className={`${styles.button} ${styles.buttonGreen}`}>
                                           Export CSV
                                       </button>
                                   </td>
