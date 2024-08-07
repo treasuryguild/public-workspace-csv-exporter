@@ -7,6 +7,7 @@ import { WorkspaceTable } from '../../components/WorkspaceTable';
 import { Organization, Workspace, Task } from '../../types/deworkTypes';
 import { fetchOrgDetails, fetchWorkspaceSlug, fetchInitialWorkspaceTasks, fetchWorkspaceTasksForExport } from '../../utils/deworkApiFunctions';
 import { countAuditedTasks, countNonAuditedTasks, getChargeMonth } from '../../utils/deworkUtils';
+import pLimit from 'p-limit';
 
 const organizations: Organization[] = [
   { id: '5c29434c-e830-442b-b9f5-d2fb00ee7b34', name: 'SNET' },
@@ -74,29 +75,34 @@ export default function DeworkExports() {
     const workspaceIds = Object.keys(workspaceObj);
     let completedCount = 0;
 
-    const fetchPromises = workspaceIds.map(async (key) => {
-      try {
-        const tasks = await fetchInitialWorkspaceTasks(workspaceObj[key].id);
-        completedCount++;
-        setLoadedWorkspaces(completedCount);
-        return { key, tasks: tasks.tasks };
-      } catch (error) {
-        console.error(`Error fetching tasks for workspace ${key}:`, error);
-        completedCount++;
-        setLoadedWorkspaces(completedCount);
-        return { key, tasks: [] };
-      }
-    });
+    // Set the concurrency limit (e.g., 5 concurrent requests)
+    const limit = pLimit(5);
+
+    const fetchPromises = workspaceIds.map((key) =>
+        limit(async () => {
+            try {
+                const tasks = await fetchInitialWorkspaceTasks(workspaceObj[key].id);
+                completedCount++;
+                setLoadedWorkspaces(completedCount);
+                return { key, tasks: tasks.tasks };
+            } catch (error) {
+                console.error(`Error fetching tasks for workspace ${key}:`, error);
+                completedCount++;
+                setLoadedWorkspaces(completedCount);
+                return { key, tasks: [] };
+            }
+        })
+    );
 
     try {
-      const results = await Promise.all(fetchPromises);
-      results.forEach(({ key, tasks }) => {
-        workspaceObj[key].tasks = tasks;
-      });
+        const results = await Promise.all(fetchPromises);
+        results.forEach(({ key, tasks }) => {
+            workspaceObj[key].tasks = tasks;
+        });
     } catch (error) {
-      console.error('Error fetching tasks:', error);
+        console.error('Error fetching tasks:', error);
     }
-  }
+}
 
   async function exportData(workspace: Workspace) {
     console.log('Exporting data for workspace:', workspace);
