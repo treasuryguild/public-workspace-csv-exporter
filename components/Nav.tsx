@@ -44,6 +44,7 @@ const Nav = () => {
       const { error } = await supabase.auth.signOut()
     }
    //console.log(session, isAdmin)
+   // Just keeping the discord signin incase we need it later
   return (
     <nav className="routes">
           <Link href="/" className="navitems">
@@ -55,10 +56,10 @@ const Nav = () => {
           <Link href="/deworkexports" className="navitems">
             Dework Exports
           </Link>
-          {!session && (<button onClick={signInWithDiscord} className="navitems">
+          {!session && false && (<button onClick={signInWithDiscord} className="navitems">
           Sign In with Discord
-        </button>)}
-          {session && (
+          </button>)}
+          {session &&  false && (
           <button onClick={signout} className="navitems">
           Sign Out
           </button>)}

@@ -7,12 +7,15 @@
   width: 100%;
   max-width: 1000px;
   margin: 0 auto;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
 }
 
 .title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  color: rgb(var(--foreground-rgb));
 }
 
 .select {
@@ -20,6 +23,8 @@
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
+  background-color: rgb(var(--background-end-rgb));
+  color: rgb(var(--foreground-rgb));
 }
 
 .table {
@@ -27,11 +32,13 @@
   max-width: 1000px;
   border-collapse: collapse;
   table-layout: fixed;
+  background-color: rgb(var(--background-end-rgb));
 }
 
 .tableHeader {
   border: 1px solid #ccc;
   padding: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .tableCell {
@@ -60,7 +67,7 @@
 
 .loadingBarContainer {
   width: 100%;
-  background-color: #e5e7eb;
+  background-color: #43464b;
   height: 1rem;
   margin-bottom: 1rem;
   border-radius: 9999px;
